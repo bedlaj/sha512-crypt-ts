@@ -16,34 +16,6 @@ class Delegate {
     b64pad: string = ""; /* base-64 pad character. "=" for strict RFC compliance   */
 
     /*
-     * These are the functions you'll usually want to call
-     * They take string arguments and return either hex or base-64 encoded strings
-     */
-    private hex_sha512(s: any): any {
-        return this.rstr2hex(this.rstr_sha512(this.str2rstr_utf8(s)));
-    }
-
-    private b64_sha512(s: any) {
-        return this.rstr2b64(this.rstr_sha512(this.str2rstr_utf8(s)));
-    }
-
-    private any_sha512(s: any, e: any) {
-        return this.rstr2any(this.rstr_sha512(this.str2rstr_utf8(s)), e);
-    }
-
-    private hex_hmac_sha512(k: any, d: any) {
-        return this.rstr2hex(this.rstr_hmac_sha512(this.str2rstr_utf8(k), this.str2rstr_utf8(d)));
-    }
-
-    private b64_hmac_sha512(k: any, d: any) {
-        return this.rstr2b64(this.rstr_hmac_sha512(this.str2rstr_utf8(k), this.str2rstr_utf8(d)));
-    }
-
-    private any_hmac_sha512(k: any, d: any, e: any) {
-        return this.rstr2any(this.rstr_hmac_sha512(this.str2rstr_utf8(k), this.str2rstr_utf8(d)), e);
-    }
-
-    /*
      * Calculate the SHA-512 of a raw string
      */
     public rstr_sha512(s: any) {
@@ -189,25 +161,6 @@ class Delegate {
                     0x80 | ((x >>> 6) & 0x3F),
                     0x80 | (x & 0x3F));
         }
-        return output;
-    }
-
-    /*
-     * Encode a string as utf-16
-     */
-    private str2rstr_utf16le(input: any) {
-        let output = "";
-        for (let i = 0; i < input.length; i++)
-            output += String.fromCharCode(input.charCodeAt(i) & 0xFF,
-                (input.charCodeAt(i) >>> 8) & 0xFF);
-        return output;
-    }
-
-    private str2rstr_utf16be(input: any) {
-        let output = "";
-        for (let i = 0; i < input.length; i++)
-            output += String.fromCharCode((input.charCodeAt(i) >>> 8) & 0xFF,
-                input.charCodeAt(i) & 0xFF);
         return output;
     }
 
@@ -602,18 +555,18 @@ class Delegate {
             if (order[i + 1] === undefined) {
                 let char_1;
                 let char_2;
-                char_1 = input.charCodeAt(order[i + 0]) & parseInt("00111111", 2);
+                char_1 = input.charCodeAt(order[i]) & parseInt("00111111", 2);
                 char_2 = (
-                    input.charCodeAt(order[i + 0]) & parseInt("11000000", 2)) >>> 6;
+                    input.charCodeAt(order[i]) & parseInt("11000000", 2)) >>> 6;
                 output += tab.charAt(char_1) + tab.charAt(char_2);
             } else {
                 let char_1;
                 let char_2;
                 let char_3;
                 let char_4;
-                char_1 = input.charCodeAt(order[i + 0]) & parseInt("00111111", 2);
+                char_1 = input.charCodeAt(order[i]) & parseInt("00111111", 2);
                 char_2 = (
-                    ((input.charCodeAt(order[i + 0]) & parseInt("11000000", 2)) >>> 6) |
+                    ((input.charCodeAt(order[i]) & parseInt("11000000", 2)) >>> 6) |
                     (input.charCodeAt(order[i + 1]) & parseInt("00001111", 2)) << 2);
                 char_3 = (
                     ((input.charCodeAt(order[i + 1]) & parseInt("11110000", 2)) >> 4) |
