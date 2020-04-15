@@ -432,7 +432,7 @@ class Delegate {
 
 // steps 1-12
     private _sha512crypt_intermediate(password: any, salt: any) {
-        const digest_a = this.rstr_sha512(password + salt);
+        // const digest_a = this.rstr_sha512(password + salt);
         const digest_b = this.rstr_sha512(password + salt + password);
         const key_len = password.length;
 
