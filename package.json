@@ -22,7 +22,7 @@
   "author": "Jan Bednar <public@janbednar.eu> (http://janbednar.eu)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bedlaj/sha512-ts.git"
+    "url": "https://github.com/bedlaj/sha512-crypt-ts.git"
   },
   "license": "Apache-2.0",
   "licenses": [
@@ -33,7 +33,7 @@
   ],
   "bugs": {
     "mail": "public@janbednar.eu",
-    "url": "https://github.com/bedlaj/sha512-ts/issues"
+    "url": "https://github.com/bedlaj/sha512-crypt-ts/issues"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",
