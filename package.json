@@ -1,5 +1,5 @@
 {
-  "name": "sha512-ts",
+  "name": "sha512-crypt-ts",
   "version": "0.0.1",
   "description": "Typescript wrapper for SHA-512, including $6$ crypt format.",
   "scripts": {
