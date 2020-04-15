@@ -1,6 +1,6 @@
 {
   "name": "sha512-ts",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "Typescript wrapper for SHA-512, including $6$ crypt format.",
   "scripts": {
     "test": "mocha -r ts-node/register tests/*.test.ts",
