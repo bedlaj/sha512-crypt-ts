@@ -1,4 +1,4 @@
-import { sha512 } from '../src/index';
+import { sha512 } from '../src';
 import { expect } from 'chai';
 
 describe('sha512crypt', function() {
