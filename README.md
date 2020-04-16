@@ -11,11 +11,11 @@ Crypt compatible ES5 implementation inspired by [mvo5/sha512crypt-node](https://
 ```
 npm install --save sha512-crypt-ts
 ```
-####Import module
+#### Import module
 ```
 import { sha512 } from 'sha512-crypt-ts';
 ```
-####Usage
+#### Usage
 ```
 sha512.sha512crypt('password', 'saltsalt');
 // Returns $6$saltsalt$qFmFH.bQmmtXzyBY0s9v7Oicd2z4XSIecDzlB5KiA2/jctKu9YterLp8wwnSq.qc.eoxqOmSuNp2xS0ktL3nh/
