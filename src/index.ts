@@ -590,8 +590,8 @@ export module sha512 {
     export const sha512crypt = (input: string, salt: string): string => delegate.sha512crypt(input, salt);
     export const hex_sha512 = (input: string): string => delegate.rstr2hex(delegate.rstr_sha512(delegate.str2rstr_utf8(input)));
     export const b64_sha512 = (input: string): string => delegate.rstr2b64(delegate.rstr_sha512(delegate.str2rstr_utf8(input)));
-    export const any_sha512 = (input: string, encoding: string): string => delegate.rstr2any(delegate.rstr_sha512(delegate.str2rstr_utf8(input)), encoding);
+    export const any_sha512 = (input: string, alphabet: string): string => delegate.rstr2any(delegate.rstr_sha512(delegate.str2rstr_utf8(input)), alphabet);
     export const hex_hmac_sha512 = (key: string, data: string): string => delegate.rstr2hex(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)));
     export const b64_hmac_sha512 = (key: string, data: string): string => delegate.rstr2b64(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)));
-    export const any_hmac_sha512 = (key: string, data: string, encoding: string): string => delegate.rstr2any(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)), encoding);
+    export const any_hmac_sha512 = (key: string, data: string, alphabet: string): string => delegate.rstr2any(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)), alphabet);
 }
