@@ -1,8 +1,9 @@
+![Build](https://github.com/bedlaj/sha512-crypt-ts/workflows/Build/badge.svg)
+![Test and publish](https://github.com/bedlaj/sha512-crypt-ts/workflows/Test%20and%20publish/badge.svg)
 [![codecov](https://codecov.io/gh/bedlaj/sha512-crypt-ts/branch/master/graph/badge.svg)](https://codecov.io/gh/bedlaj/sha512-crypt-ts)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/bedlaj/sha512-crypt-ts.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bedlaj/sha512-crypt-ts/alerts/)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/bedlaj/sha512-crypt-ts.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bedlaj/sha512-crypt-ts/context:javascript)
-![Build](https://github.com/bedlaj/sha512-crypt-ts/workflows/Build/badge.svg)
-![Test and publish](https://github.com/bedlaj/sha512-crypt-ts/workflows/Test%20and%20publish/badge.svg)
+
 # SHA-512-crypt-ts
 Crypt compatible ES5 implementation inspired by [mvo5/sha512crypt-node](https://github.com/mvo5/sha512crypt-node)
 
