@@ -43,11 +43,6 @@ class Delegate {
      * Convert a raw string to a hex string
      */
     public rstr2hex(input: any) {
-        try {
-            this.hexcase
-        } catch (e) {
-            this.hexcase = 0;
-        }
         const hex_tab = this.hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
         let output = "";
         let x;
@@ -63,11 +58,6 @@ class Delegate {
      * Convert a raw string to a base-64 string
      */
     public rstr2b64(input: any) {
-        try {
-            this.b64pad
-        } catch (e) {
-            this.b64pad = '';
-        }
         const tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
         let output = "";
         const len = input.length;

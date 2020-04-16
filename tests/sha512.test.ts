@@ -7,6 +7,7 @@ describe('sha512crypt', function () {
         expect(result).equal("$6$saltsalt$qFmFH.bQmmtXzyBY0s9v7Oicd2z4XSIecDzlB5KiA2/jctKu9YterLp8wwnSq.qc.eoxqOmSuNp2xS0ktL3nh/");
     });
     it('should extend with long password', function () {
+        this.enableTimeouts(false);
         let result = sha512.sha512crypt(new Array(64*3).join('a'), "saltsalt")
         expect(result).equal("$6$saltsalt$1waR97hj.De.si2aUKm7TSJMAKH8gA5wUQZqfW5XVNs6WkyBI03XjoIhm/3igFPeKIKlcRkUhA6CxtheIBE0a.");
     });
@@ -74,6 +75,10 @@ describe('b64_hmac_sha512', function () {
     it('b64_hmac_sha512', function () {
         let result = sha512.b64_hmac_sha512("key", "data")
         expect(result).equal("PFlToY9zA+xlO6FwrjNPr6COOEby7+MXuH786CN2JTy1Kowx3c3lo6Lu4YPCs0y5H4XmTdvDJfdpKxmUc1ecWA");
+    });
+    it('b64_hmac_sha512 with long key', function () {
+        let result = sha512.b64_hmac_sha512(new Array(64*3).join('a'), "data")
+        expect(result).equal("o+UJTdpnFdKWO6EjljXNfLEXy+wB1hB9JrV/Sz6J3RhsgvjtESmjTH9MYUMhM3cHeMiqVafW6vIyKNNsl78vYQ");
     });
     it('b64_hmac_sha512 with pad =', function () {
         let result = sha512.with_b64pad('=').b64_hmac_sha512("key", "data")
