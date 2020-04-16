@@ -6,10 +6,24 @@ describe('sha512crypt', function () {
         let result = sha512.sha512crypt("password", "saltsalt")
         expect(result).equal("$6$saltsalt$qFmFH.bQmmtXzyBY0s9v7Oicd2z4XSIecDzlB5KiA2/jctKu9YterLp8wwnSq.qc.eoxqOmSuNp2xS0ktL3nh/");
     });
+    it('should extend with long password', function () {
+        let result = sha512.sha512crypt(new Array(64*3).join('a'), "saltsalt")
+        expect(result).equal("$6$saltsalt$1waR97hj.De.si2aUKm7TSJMAKH8gA5wUQZqfW5XVNs6WkyBI03XjoIhm/3igFPeKIKlcRkUhA6CxtheIBE0a.");
+    });
+    it('should support $6$ salt format', function () {
+        let result = sha512.sha512crypt("password", "$6$saltsalt")
+        expect(result).equal("$6$saltsalt$qFmFH.bQmmtXzyBY0s9v7Oicd2z4XSIecDzlB5KiA2/jctKu9YterLp8wwnSq.qc.eoxqOmSuNp2xS0ktL3nh/");
+    });
     it('sha512crypt rounds=1000', function () {
         let result = sha512.sha512crypt("password", "$6$rounds=1000$saltsalt")
         expect(result).equal("$6$rounds=1000$saltsalt$Z/J9iYO1iE9xnr8JPQL57ZWsVRtVjrUv3CiWc/wKWseqXgSqn3HFYJ/Ng7YXa8XlLj.wpdAwHOJJzuGFqBBRa0");
     });
+
+    it('should adjust rounds to 1000', function () {
+        let result = sha512.sha512crypt("password", "$6$rounds=10$saltsalt")
+        expect(result).equal("$6$rounds=1000$saltsalt$Z/J9iYO1iE9xnr8JPQL57ZWsVRtVjrUv3CiWc/wKWseqXgSqn3HFYJ/Ng7YXa8XlLj.wpdAwHOJJzuGFqBBRa0");
+    });
+
     it('sha512crypt should validate magic', function () {
         assert.throws(() => sha512.sha512crypt("password", "$5$saltsalt"), Error)
         assert.doesNotThrow(() => sha512.sha512crypt("password", "$6$saltsalt"), Error)
