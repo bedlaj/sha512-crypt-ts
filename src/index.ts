@@ -594,4 +594,13 @@ export module sha512 {
     export const hex_hmac_sha512 = (key: string, data: string): string => delegate.rstr2hex(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)));
     export const b64_hmac_sha512 = (key: string, data: string): string => delegate.rstr2b64(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)));
     export const any_hmac_sha512 = (key: string, data: string, alphabet: string): string => delegate.rstr2any(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)), alphabet);
+
+    export const with_b64pad = (b64pad?: string): any => {
+        delegate.b64pad = b64pad || '';
+        return sha512;
+    }
+    export const with_hexcase = (uppercase?: boolean): any => {
+        delegate.hexcase = uppercase ? 1 : 0;
+        return sha512;
+    }
 }
