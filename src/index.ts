@@ -585,7 +585,7 @@ class Delegate {
     }
 }
 
-export module sha512 { 
+export module sha512 {
     const delegate = new Delegate();
     export const sha512crypt = (input: string, salt: string): string => delegate.sha512crypt(input, salt);
     export const hex_sha512 = (input: string): string => delegate.rstr2hex(delegate.rstr_sha512(delegate.str2rstr_utf8(input)));
