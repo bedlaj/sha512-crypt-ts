@@ -64,6 +64,10 @@ describe('hex_hmac_sha512', function () {
         let result = sha512.with_hexcase(true).hex_hmac_sha512("key", "data")
         expect(result).equal("3C5953A18F7303EC653BA170AE334FAFA08E3846F2EFE317B87EFCE82376253CB52A8C31DDCDE5A3A2EEE183C2B34CB91F85E64DDBC325F7692B199473579C58");
     });
+    it('hex_hmac_sha512 hexcase reset to default', function () {
+        let result = sha512.with_hexcase().hex_hmac_sha512("key", "data")
+        expect(result).equal("3c5953a18f7303ec653ba170ae334fafa08e3846f2efe317b87efce82376253cb52a8c31ddcde5a3a2eee183c2b34cb91f85e64ddbc325f7692b199473579c58");
+    });
 });
 
 describe('b64_hmac_sha512', function () {
@@ -74,6 +78,14 @@ describe('b64_hmac_sha512', function () {
     it('b64_hmac_sha512 with pad =', function () {
         let result = sha512.with_b64pad('=').b64_hmac_sha512("key", "data")
         expect(result).equal("PFlToY9zA+xlO6FwrjNPr6COOEby7+MXuH786CN2JTy1Kowx3c3lo6Lu4YPCs0y5H4XmTdvDJfdpKxmUc1ecWA==");
+    });
+    it('b64_hmac_sha512 with pad empty', function () {
+        let result = sha512.with_b64pad('').b64_hmac_sha512("key", "data")
+        expect(result).equal("PFlToY9zA+xlO6FwrjNPr6COOEby7+MXuH786CN2JTy1Kowx3c3lo6Lu4YPCs0y5H4XmTdvDJfdpKxmUc1ecWA");
+    });
+    it('b64_hmac_sha512 with pad reset to default', function () {
+        let result = sha512.with_b64pad().b64_hmac_sha512("key", "data")
+        expect(result).equal("PFlToY9zA+xlO6FwrjNPr6COOEby7+MXuH786CN2JTy1Kowx3c3lo6Lu4YPCs0y5H4XmTdvDJfdpKxmUc1ecWA");
     });
 });
 
