@@ -1,5 +1,5 @@
 import {sha512} from '../src';
-import {expect} from 'chai';
+import {expect, assert} from 'chai';
 
 describe('sha512crypt', function () {
     it('sha512crypt default rounds', function () {
@@ -9,6 +9,10 @@ describe('sha512crypt', function () {
     it('sha512crypt rounds=1000', function () {
         let result = sha512.sha512crypt("password", "$6$rounds=1000$saltsalt")
         expect(result).equal("$6$rounds=1000$saltsalt$Z/J9iYO1iE9xnr8JPQL57ZWsVRtVjrUv3CiWc/wKWseqXgSqn3HFYJ/Ng7YXa8XlLj.wpdAwHOJJzuGFqBBRa0");
+    });
+    it('sha512crypt should validate magic', function () {
+        assert.throws(() => sha512.sha512crypt("password", "$5$saltsalt"), Error)
+        assert.doesNotThrow(() => sha512.sha512crypt("password", "$6$saltsalt"), Error)
     });
 });
 
