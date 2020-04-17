@@ -577,20 +577,18 @@ class Delegate {
 
 export module sha512 {
     const delegate = new Delegate();
-    export const sha512crypt = (input: string, salt: string): string => delegate.sha512crypt(input, salt);
-    export const hex_sha512 = (input: string): string => delegate.rstr2hex(delegate.rstr_sha512(delegate.str2rstr_utf8(input)));
-    export const b64_sha512 = (input: string): string => delegate.rstr2b64(delegate.rstr_sha512(delegate.str2rstr_utf8(input)));
-    export const any_sha512 = (input: string, alphabet: string): string => delegate.rstr2any(delegate.rstr_sha512(delegate.str2rstr_utf8(input)), alphabet);
-    export const hex_hmac_sha512 = (key: string, data: string): string => delegate.rstr2hex(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)));
-    export const b64_hmac_sha512 = (key: string, data: string): string => delegate.rstr2b64(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)));
-    export const any_hmac_sha512 = (key: string, data: string, alphabet: string): string => delegate.rstr2any(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)), alphabet);
+    export const crypt = (input: string, salt: string): string => delegate.sha512crypt(input, salt);
+    export const hex = (input: string): string => delegate.rstr2hex(delegate.rstr_sha512(delegate.str2rstr_utf8(input)));
+    export const base64 = (input: string): string => delegate.rstr2b64(delegate.rstr_sha512(delegate.str2rstr_utf8(input)));
+    export const any = (input: string, alphabet: string): string => delegate.rstr2any(delegate.rstr_sha512(delegate.str2rstr_utf8(input)), alphabet);
+    export const hexHmac = (key: string, data: string): string => delegate.rstr2hex(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)));
+    export const base64Hmac = (key: string, data: string): string => delegate.rstr2b64(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)));
+    export const anyHmac = (key: string, data: string, alphabet: string): string => delegate.rstr2any(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)), alphabet);
 
-    export const with_b64pad = (b64pad?: string): any => {
+    export function setBase64Padding(b64pad?: string): void {
         delegate.b64pad = b64pad || '';
-        return sha512;
     }
-    export const with_hexcase = (uppercase?: boolean): any => {
+    export function setHexCase(uppercase?: boolean): void {
         delegate.hexcase = uppercase ? 1 : 0;
-        return sha512;
     }
 }

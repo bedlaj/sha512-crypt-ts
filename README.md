@@ -19,7 +19,7 @@ import { sha512 } from 'sha512-crypt-ts';
 ```
 #### Usage
 ```
-sha512.sha512crypt('password', 'saltsalt');
+sha512.crypt('password', 'saltsalt');
 // Returns $6$saltsalt$qFmFH.bQmmtXzyBY0s9v7Oicd2z4XSIecDzlB5KiA2/jctKu9YterLp8wwnSq.qc.eoxqOmSuNp2xS0ktL3nh/
 ```
 Another examples can be found in [unit tests](https://github.com/bedlaj/sha512-crypt-ts/blob/master/tests/sha512.test.ts) or in peer project [bedlaj/unifi-reset-password](https://github.com/bedlaj/unifi-reset-password/blob/master/src/app/app.component.ts).
