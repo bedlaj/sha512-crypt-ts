@@ -6,7 +6,7 @@
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/bedlaj/sha512-crypt-ts.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bedlaj/sha512-crypt-ts/context:javascript)
 
 # SHA-512-crypt-ts
-Crypt compatible ES5 implementation inspired by [mvo5/sha512crypt-node](https://github.com/mvo5/sha512crypt-node)
+Crypt compatible typescript implementation inspired by [mvo5/sha512crypt-node](https://github.com/mvo5/sha512crypt-node)
 
 # Installation
 #### Install [NPM package](https://www.npmjs.com/package/sha512-crypt-ts)
