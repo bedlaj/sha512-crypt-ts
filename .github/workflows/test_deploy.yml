@@ -41,7 +41,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      - name: Build docs
+      - name: Build docs version
         run: |
           npm run docs -- --gitRevision ${GITHUB_SHA}
       - name: Find published version
@@ -55,6 +55,13 @@ jobs:
           BRANCH: gh-pages
           FOLDER: docs
           TARGET_FOLDER: ${{ env.LATEST_VERSION }}
+      - name: Cleanup docs
+        run: |
+          git fetch origin
+          git reset --hard origin/master
+      - name: Build docs latest
+        run: |
+          npm run docs -- --gitRevision ${GITHUB_SHA}
       - name: Publish docs latest
         uses: JamesIves/github-pages-deploy-action@releases/v2
         env:
