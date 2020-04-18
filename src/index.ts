@@ -19,14 +19,14 @@ class Delegate {
      * Calculate the SHA-512 of a raw string
      */
     public rstr_sha512(s: any) {
-        return this.binb2rstr(this.binb_sha512(this.rstr2binb(s), s.length * 8));
+        return Delegate.binb2rstr(this.binb_sha512(Delegate.rstr2binb(s), s.length * 8));
     }
 
     /*
      * Calculate the HMAC-SHA-512 of a key and some data (raw strings)
      */
     public rstr_hmac_sha512(key: any, data: any) {
-        let bkey = this.rstr2binb(key);
+        let bkey = Delegate.rstr2binb(key);
         if (bkey.length > 32) bkey = this.binb_sha512(bkey, key.length * 8);
 
         const ipad = Array(32), opad = Array(32);
@@ -35,8 +35,8 @@ class Delegate {
             opad[i] = bkey[i] ^ 0x5C5C5C5C;
         }
 
-        const hash = this.binb_sha512(ipad.concat(this.rstr2binb(data)), 1024 + data.length * 8);
-        return this.binb2rstr(this.binb_sha512(opad.concat(hash), 1024 + 512));
+        const hash = this.binb_sha512(ipad.concat(Delegate.rstr2binb(data)), 1024 + data.length * 8);
+        return Delegate.binb2rstr(this.binb_sha512(opad.concat(hash), 1024 + 512));
     }
 
     /*
@@ -158,7 +158,7 @@ class Delegate {
      * Convert a raw string to an array of big-endian words
      * Characters >255 have their high-byte silently ignored.
      */
-    private rstr2binb(input: any) {
+    private static rstr2binb(input: any) {
         const output = Array(input.length >> 2);
         for (let i = 0; i < output.length; i++)
             output[i] = 0;
@@ -170,7 +170,7 @@ class Delegate {
     /*
      * Convert an array of big-endian words to a string
      */
-    private binb2rstr(input: any) {
+    private static binb2rstr(input: any) {
         let output = "";
         for (let i = 0; i < input.length * 32; i += 8)
             output += String.fromCharCode((input[i >> 5] >>> (24 - i % 32)) & 0xFF);
@@ -185,8 +185,7 @@ class Delegate {
     private binb_sha512(x: any, len: any) {
         if (this.sha512_k == undefined) {
             //SHA512 constants
-            this.sha512_k = new Array(
-                new Int64(0x428a2f98, -685199838), new Int64(0x71374491, 0x23ef65cd),
+            this.sha512_k = [new Int64(0x428a2f98, -685199838), new Int64(0x71374491, 0x23ef65cd),
                 new Int64(-1245643825, -330482897), new Int64(-373957723, -2121671748),
                 new Int64(0x3956c25b, -213338824), new Int64(0x59f111f1, -1241133031),
                 new Int64(-1841331548, -1357295717), new Int64(-1424204075, -630357736),
@@ -225,19 +224,18 @@ class Delegate {
                 new Int64(0x28db77f5, 0x23047d84), new Int64(0x32caab7b, 0x40c72493),
                 new Int64(0x3c9ebe0a, 0x15c9bebc), new Int64(0x431d67c4, -1676669620),
                 new Int64(0x4cc5d4be, -885112138), new Int64(0x597f299c, -60457430),
-                new Int64(0x5fcb6fab, 0x3ad6faec), new Int64(0x6c44198c, 0x4a475817));
+                new Int64(0x5fcb6fab, 0x3ad6faec), new Int64(0x6c44198c, 0x4a475817)];
         }
 
         //Initial hash values
-        const H = new Array(
-            new Int64(0x6a09e667, -205731576),
+        const H = [new Int64(0x6a09e667, -205731576),
             new Int64(-1150833019, -2067093701),
             new Int64(0x3c6ef372, -23791573),
             new Int64(-1521486534, 0x5f1d36f1),
             new Int64(0x510e527f, -1377402159),
             new Int64(-1694144372, 0x2b3e6c1f),
             new Int64(0x1f83d9ab, -79577749),
-            new Int64(0x5be0cd19, 0x137e2179));
+            new Int64(0x5be0cd19, 0x137e2179)];
 
         const T1 = new Int64(0, 0),
             T2 = new Int64(0, 0),
@@ -268,14 +266,14 @@ class Delegate {
 
         for (i = 0; i < x.length; i += 32) //32 dwords is the block size
         {
-            this.Int64copy(a, H[0]);
-            this.Int64copy(b, H[1]);
-            this.Int64copy(c, H[2]);
-            this.Int64copy(d, H[3]);
-            this.Int64copy(e, H[4]);
-            this.Int64copy(f, H[5]);
-            this.Int64copy(g, H[6]);
-            this.Int64copy(h, H[7]);
+            Delegate.Int64copy(a, H[0]);
+            Delegate.Int64copy(b, H[1]);
+            Delegate.Int64copy(c, H[2]);
+            Delegate.Int64copy(d, H[3]);
+            Delegate.Int64copy(e, H[4]);
+            Delegate.Int64copy(f, H[5]);
+            Delegate.Int64copy(g, H[6]);
+            Delegate.Int64copy(h, H[7]);
 
             for (j = 0; j < 16; j++) {
                 W[j].h = x[i + 2 * j];
@@ -284,19 +282,19 @@ class Delegate {
 
             for (j = 16; j < 80; j++) {
                 //sigma1
-                this.Int64rrot(r1, W[j - 2], 19);
-                this.Int64revrrot(r2, W[j - 2], 29);
-                this.Int64shr(r3, W[j - 2], 6);
+                Delegate.Int64rrot(r1, W[j - 2], 19);
+                Delegate.Int64revrrot(r2, W[j - 2], 29);
+                Delegate.Int64shr(r3, W[j - 2], 6);
                 s1.l = r1.l ^ r2.l ^ r3.l;
                 s1.h = r1.h ^ r2.h ^ r3.h;
                 //sigma0
-                this.Int64rrot(r1, W[j - 15], 1);
-                this.Int64rrot(r2, W[j - 15], 8);
-                this.Int64shr(r3, W[j - 15], 7);
+                Delegate.Int64rrot(r1, W[j - 15], 1);
+                Delegate.Int64rrot(r2, W[j - 15], 8);
+                Delegate.Int64shr(r3, W[j - 15], 7);
                 s0.l = r1.l ^ r2.l ^ r3.l;
                 s0.h = r1.h ^ r2.h ^ r3.h;
 
-                this.Int64add4(W[j], s1, W[j - 7], s0, W[j - 16]);
+                Delegate.Int64add4(W[j], s1, W[j - 7], s0, W[j - 16]);
             }
 
             for (j = 0; j < 80; j++) {
@@ -305,16 +303,16 @@ class Delegate {
                 Ch.h = (e.h & f.h) ^ (~e.h & g.h);
 
                 //Sigma1
-                this.Int64rrot(r1, e, 14);
-                this.Int64rrot(r2, e, 18);
-                this.Int64revrrot(r3, e, 9);
+                Delegate.Int64rrot(r1, e, 14);
+                Delegate.Int64rrot(r2, e, 18);
+                Delegate.Int64revrrot(r3, e, 9);
                 s1.l = r1.l ^ r2.l ^ r3.l;
                 s1.h = r1.h ^ r2.h ^ r3.h;
 
                 //Sigma0
-                this.Int64rrot(r1, a, 28);
-                this.Int64revrrot(r2, a, 2);
-                this.Int64revrrot(r3, a, 7);
+                Delegate.Int64rrot(r1, a, 28);
+                Delegate.Int64revrrot(r2, a, 2);
+                Delegate.Int64revrrot(r3, a, 7);
                 s0.l = r1.l ^ r2.l ^ r3.l;
                 s0.h = r1.h ^ r2.h ^ r3.h;
 
@@ -322,26 +320,26 @@ class Delegate {
                 Maj.l = (a.l & b.l) ^ (a.l & c.l) ^ (b.l & c.l);
                 Maj.h = (a.h & b.h) ^ (a.h & c.h) ^ (b.h & c.h);
 
-                this.Int64add5(T1, h, s1, Ch, this.sha512_k[j], W[j]);
-                this.Int64add(T2, s0, Maj);
+                Delegate.Int64add5(T1, h, s1, Ch, this.sha512_k[j], W[j]);
+                Delegate.Int64add(T2, s0, Maj);
 
-                this.Int64copy(h, g);
-                this.Int64copy(g, f);
-                this.Int64copy(f, e);
-                this.Int64add(e, d, T1);
-                this.Int64copy(d, c);
-                this.Int64copy(c, b);
-                this.Int64copy(b, a);
-                this.Int64add(a, T1, T2);
+                Delegate.Int64copy(h, g);
+                Delegate.Int64copy(g, f);
+                Delegate.Int64copy(f, e);
+                Delegate.Int64add(e, d, T1);
+                Delegate.Int64copy(d, c);
+                Delegate.Int64copy(c, b);
+                Delegate.Int64copy(b, a);
+                Delegate.Int64add(a, T1, T2);
             }
-            this.Int64add(H[0], H[0], a);
-            this.Int64add(H[1], H[1], b);
-            this.Int64add(H[2], H[2], c);
-            this.Int64add(H[3], H[3], d);
-            this.Int64add(H[4], H[4], e);
-            this.Int64add(H[5], H[5], f);
-            this.Int64add(H[6], H[6], g);
-            this.Int64add(H[7], H[7], h);
+            Delegate.Int64add(H[0], H[0], a);
+            Delegate.Int64add(H[1], H[1], b);
+            Delegate.Int64add(H[2], H[2], c);
+            Delegate.Int64add(H[3], H[3], d);
+            Delegate.Int64add(H[4], H[4], e);
+            Delegate.Int64add(H[5], H[5], f);
+            Delegate.Int64add(H[6], H[6], g);
+            Delegate.Int64add(H[7], H[7], h);
         }
 
         //represent the hash as an array of 32-bit dwords
@@ -354,7 +352,7 @@ class Delegate {
     }
 
 //Copies src into dst, assuming both are 64-bit numbers
-    private Int64copy(dst: any, src: any) {
+    private static Int64copy(dst: any, src: any) {
         dst.h = src.h;
         dst.l = src.l;
     }
@@ -362,28 +360,28 @@ class Delegate {
 //Right-rotates a 64-bit number by shift
 //Won't handle cases of shift>=32
 //The private revrrot() is for that
-    private Int64rrot(dst: any, x: any, shift: any) {
+    private static Int64rrot(dst: any, x: any, shift: any) {
         dst.l = (x.l >>> shift) | (x.h << (32 - shift));
         dst.h = (x.h >>> shift) | (x.l << (32 - shift));
     }
 
 //Reverses the dwords of the source and then rotates right by shift.
 //This is equivalent to rotation by 32+shift
-    private Int64revrrot(dst: any, x: any, shift: any) {
+    private static Int64revrrot(dst: any, x: any, shift: any) {
         dst.l = (x.h >>> shift) | (x.l << (32 - shift));
         dst.h = (x.l >>> shift) | (x.h << (32 - shift));
     }
 
 //Bitwise-shifts right a 64-bit number by shift
 //Won't handle shift>=32, but it's never needed in SHA512
-    private Int64shr(dst: any, x: any, shift: any) {
+    private static Int64shr(dst: any, x: any, shift: any) {
         dst.l = (x.l >>> shift) | (x.h << (32 - shift));
         dst.h = (x.h >>> shift);
     }
 
 //Adds two 64-bit numbers
 //Like the original implementation, does not rely on 32-bit operations
-    private Int64add(dst: any, x: any, y: any) {
+    private static Int64add(dst: any, x: any, y: any) {
         const w0 = (x.l & 0xffff) + (y.l & 0xffff);
         const w1 = (x.l >>> 16) + (y.l >>> 16) + (w0 >>> 16);
         const w2 = (x.h & 0xffff) + (y.h & 0xffff) + (w1 >>> 16);
@@ -393,7 +391,7 @@ class Delegate {
     }
 
 //Same, except with 4 addends. Works faster than adding them one by one.
-    private Int64add4(dst: any, a: any, b: any, c: any, d: any) {
+    private static Int64add4(dst: any, a: any, b: any, c: any, d: any) {
         const w0 = (a.l & 0xffff) + (b.l & 0xffff) + (c.l & 0xffff) + (d.l & 0xffff);
         const w1 = (a.l >>> 16) + (b.l >>> 16) + (c.l >>> 16) + (d.l >>> 16) + (w0 >>> 16);
         const w2 = (a.h & 0xffff) + (b.h & 0xffff) + (c.h & 0xffff) + (d.h & 0xffff) + (w1 >>> 16);
@@ -403,7 +401,7 @@ class Delegate {
     }
 
 //Same, except with 5 addends
-    private Int64add5(dst: any, a: any, b: any, c: any, d: any, e: any) {
+    private static Int64add5(dst: any, a: any, b: any, c: any, d: any, e: any) {
         const w0 = (a.l & 0xffff) + (b.l & 0xffff) + (c.l & 0xffff) + (d.l & 0xffff) + (e.l & 0xffff);
         const w1 = (a.l >>> 16) + (b.l >>> 16) + (c.l >>> 16) + (d.l >>> 16) + (e.l >>> 16) + (w0 >>> 16);
         const w2 = (a.h & 0xffff) + (b.h & 0xffff) + (c.h & 0xffff) + (d.h & 0xffff) + (e.h & 0xffff) + (w1 >>> 16);
@@ -412,7 +410,7 @@ class Delegate {
         dst.h = (w2 & 0xffff) | (w3 << 16);
     }
 
-    private _extend(source: any, size_ref: any) {
+    private static _extend(source: any, size_ref: any) {
         let extended = "";
         for (let i = 0; i < Math.floor(size_ref / 64); i++)
             extended += source;
@@ -427,7 +425,7 @@ class Delegate {
         const key_len = password.length;
 
         // extend digest b so that it has the same size as password
-        const digest_b_extended = this._extend(digest_b, password.length);
+        const digest_b_extended = Delegate._extend(digest_b, password.length);
 
         let intermediate_input = password + salt + digest_b_extended;
         for (let cnt = key_len; cnt > 0; cnt >>= 1) {
@@ -450,7 +448,7 @@ class Delegate {
             dp_input += password;
         const dp = this.rstr_sha512(dp_input);
         // step 16
-        const p = this._extend(dp, password.length);
+        const p = Delegate._extend(dp, password.length);
 
         // step 17-19
         let ds_input = "";
@@ -458,7 +456,7 @@ class Delegate {
             ds_input += salt;
         const ds = this.rstr_sha512(ds_input);
         // step 20
-        const s = this._extend(ds, salt.length);
+        const s = Delegate._extend(ds, salt.length);
 
         // step 21
         let digest = digest_a;
