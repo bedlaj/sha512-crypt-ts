@@ -6,23 +6,27 @@ class Int64 {
         this.h = h;
         this.l = l;
     }
-
-    //this.toString = Int64toString;
 }
 
 class Delegate {
 
-    hexcase: number = 0;  /* hex output format. 0 - lowercase; 1 - uppercase        */
-    b64pad: string = ""; /* base-64 pad character. "=" for strict RFC compliance   */
+    /**
+     * hex output format. 0 - lowercase; 1 - uppercase
+     */
+    hexcase: number = 0;
+    /**
+     * base-64 pad character. "=" for strict RFC compliance
+     */
+    b64pad: string = "";
 
-    /*
+    /**
      * Calculate the SHA-512 of a raw string
      */
     public rstr_sha512(s: any) {
         return Delegate.binb2rstr(this.binb_sha512(Delegate.rstr2binb(s), s.length * 8));
     }
 
-    /*
+    /**
      * Calculate the HMAC-SHA-512 of a key and some data (raw strings)
      */
     public rstr_hmac_sha512(key: any, data: any) {
@@ -39,7 +43,7 @@ class Delegate {
         return Delegate.binb2rstr(this.binb_sha512(opad.concat(hash), 1024 + 512));
     }
 
-    /*
+    /**
      * Convert a raw string to a hex string
      */
     public rstr2hex(input: any) {
@@ -54,7 +58,7 @@ class Delegate {
         return output;
     }
 
-    /*
+    /**
      * Convert a raw string to a base-64 string
      */
     public rstr2b64(input: any) {
@@ -73,7 +77,7 @@ class Delegate {
         return output;
     }
 
-    /*
+    /**
      * Convert a raw string to an arbitrary string encoding
      */
     public rstr2any(input: any, encoding: any) {
@@ -117,7 +121,7 @@ class Delegate {
         return output;
     }
 
-    /*
+    /**
      * Encode a string as utf-8.
      * For efficiency, this assumes the input is valid utf-16.
      */
@@ -154,7 +158,7 @@ class Delegate {
         return output;
     }
 
-    /*
+    /**
      * Convert a raw string to an array of big-endian words
      * Characters >255 have their high-byte silently ignored.
      */
@@ -167,7 +171,7 @@ class Delegate {
         return output;
     }
 
-    /*
+    /**
      * Convert an array of big-endian words to a string
      */
     private static binb2rstr(input: any) {
@@ -177,7 +181,7 @@ class Delegate {
         return output;
     }
 
-    /*
+    /**
      * Calculate the SHA-512 of an array of big-endian dwords, and a bit length
      */
     sha512_k: any = undefined;
@@ -266,14 +270,14 @@ class Delegate {
 
         for (i = 0; i < x.length; i += 32) //32 dwords is the block size
         {
-            Delegate.Int64copy(a, H[0]);
-            Delegate.Int64copy(b, H[1]);
-            Delegate.Int64copy(c, H[2]);
-            Delegate.Int64copy(d, H[3]);
-            Delegate.Int64copy(e, H[4]);
-            Delegate.Int64copy(f, H[5]);
-            Delegate.Int64copy(g, H[6]);
-            Delegate.Int64copy(h, H[7]);
+            Delegate.int64copy(a, H[0]);
+            Delegate.int64copy(b, H[1]);
+            Delegate.int64copy(c, H[2]);
+            Delegate.int64copy(d, H[3]);
+            Delegate.int64copy(e, H[4]);
+            Delegate.int64copy(f, H[5]);
+            Delegate.int64copy(g, H[6]);
+            Delegate.int64copy(h, H[7]);
 
             for (j = 0; j < 16; j++) {
                 W[j].h = x[i + 2 * j];
@@ -282,19 +286,19 @@ class Delegate {
 
             for (j = 16; j < 80; j++) {
                 //sigma1
-                Delegate.Int64rrot(r1, W[j - 2], 19);
-                Delegate.Int64revrrot(r2, W[j - 2], 29);
-                Delegate.Int64shr(r3, W[j - 2], 6);
+                Delegate.int64rrot(r1, W[j - 2], 19);
+                Delegate.int64revrrot(r2, W[j - 2], 29);
+                Delegate.int64shr(r3, W[j - 2], 6);
                 s1.l = r1.l ^ r2.l ^ r3.l;
                 s1.h = r1.h ^ r2.h ^ r3.h;
                 //sigma0
-                Delegate.Int64rrot(r1, W[j - 15], 1);
-                Delegate.Int64rrot(r2, W[j - 15], 8);
-                Delegate.Int64shr(r3, W[j - 15], 7);
+                Delegate.int64rrot(r1, W[j - 15], 1);
+                Delegate.int64rrot(r2, W[j - 15], 8);
+                Delegate.int64shr(r3, W[j - 15], 7);
                 s0.l = r1.l ^ r2.l ^ r3.l;
                 s0.h = r1.h ^ r2.h ^ r3.h;
 
-                Delegate.Int64add4(W[j], s1, W[j - 7], s0, W[j - 16]);
+                Delegate.int64add4(W[j], s1, W[j - 7], s0, W[j - 16]);
             }
 
             for (j = 0; j < 80; j++) {
@@ -303,16 +307,16 @@ class Delegate {
                 Ch.h = (e.h & f.h) ^ (~e.h & g.h);
 
                 //Sigma1
-                Delegate.Int64rrot(r1, e, 14);
-                Delegate.Int64rrot(r2, e, 18);
-                Delegate.Int64revrrot(r3, e, 9);
+                Delegate.int64rrot(r1, e, 14);
+                Delegate.int64rrot(r2, e, 18);
+                Delegate.int64revrrot(r3, e, 9);
                 s1.l = r1.l ^ r2.l ^ r3.l;
                 s1.h = r1.h ^ r2.h ^ r3.h;
 
                 //Sigma0
-                Delegate.Int64rrot(r1, a, 28);
-                Delegate.Int64revrrot(r2, a, 2);
-                Delegate.Int64revrrot(r3, a, 7);
+                Delegate.int64rrot(r1, a, 28);
+                Delegate.int64revrrot(r2, a, 2);
+                Delegate.int64revrrot(r3, a, 7);
                 s0.l = r1.l ^ r2.l ^ r3.l;
                 s0.h = r1.h ^ r2.h ^ r3.h;
 
@@ -320,26 +324,26 @@ class Delegate {
                 Maj.l = (a.l & b.l) ^ (a.l & c.l) ^ (b.l & c.l);
                 Maj.h = (a.h & b.h) ^ (a.h & c.h) ^ (b.h & c.h);
 
-                Delegate.Int64add5(T1, h, s1, Ch, this.sha512_k[j], W[j]);
-                Delegate.Int64add(T2, s0, Maj);
+                Delegate.int64add5(T1, h, s1, Ch, this.sha512_k[j], W[j]);
+                Delegate.int64add(T2, s0, Maj);
 
-                Delegate.Int64copy(h, g);
-                Delegate.Int64copy(g, f);
-                Delegate.Int64copy(f, e);
-                Delegate.Int64add(e, d, T1);
-                Delegate.Int64copy(d, c);
-                Delegate.Int64copy(c, b);
-                Delegate.Int64copy(b, a);
-                Delegate.Int64add(a, T1, T2);
+                Delegate.int64copy(h, g);
+                Delegate.int64copy(g, f);
+                Delegate.int64copy(f, e);
+                Delegate.int64add(e, d, T1);
+                Delegate.int64copy(d, c);
+                Delegate.int64copy(c, b);
+                Delegate.int64copy(b, a);
+                Delegate.int64add(a, T1, T2);
             }
-            Delegate.Int64add(H[0], H[0], a);
-            Delegate.Int64add(H[1], H[1], b);
-            Delegate.Int64add(H[2], H[2], c);
-            Delegate.Int64add(H[3], H[3], d);
-            Delegate.Int64add(H[4], H[4], e);
-            Delegate.Int64add(H[5], H[5], f);
-            Delegate.Int64add(H[6], H[6], g);
-            Delegate.Int64add(H[7], H[7], h);
+            Delegate.int64add(H[0], H[0], a);
+            Delegate.int64add(H[1], H[1], b);
+            Delegate.int64add(H[2], H[2], c);
+            Delegate.int64add(H[3], H[3], d);
+            Delegate.int64add(H[4], H[4], e);
+            Delegate.int64add(H[5], H[5], f);
+            Delegate.int64add(H[6], H[6], g);
+            Delegate.int64add(H[7], H[7], h);
         }
 
         //represent the hash as an array of 32-bit dwords
@@ -351,37 +355,47 @@ class Delegate {
         return hash;
     }
 
-//Copies src into dst, assuming both are 64-bit numbers
-    private static Int64copy(dst: any, src: any) {
+    /**
+     *  Copies src into dst, assuming both are 64-bit numbers
+     */
+    private static int64copy(dst: any, src: any) {
         dst.h = src.h;
         dst.l = src.l;
     }
 
-//Right-rotates a 64-bit number by shift
-//Won't handle cases of shift>=32
-//The private revrrot() is for that
-    private static Int64rrot(dst: any, x: any, shift: any) {
+    /**
+     * Right-rotates a 64-bit number by shift
+     * Won't handle cases of shift>=32
+     * The private revrrot() is for that
+     * */
+    private static int64rrot(dst: any, x: any, shift: any) {
         dst.l = (x.l >>> shift) | (x.h << (32 - shift));
         dst.h = (x.h >>> shift) | (x.l << (32 - shift));
     }
 
-//Reverses the dwords of the source and then rotates right by shift.
-//This is equivalent to rotation by 32+shift
-    private static Int64revrrot(dst: any, x: any, shift: any) {
+    /**
+     * Reverses the dwords of the source and then rotates right by shift.
+     * This is equivalent to rotation by 32+shift
+     */
+    private static int64revrrot(dst: any, x: any, shift: any) {
         dst.l = (x.h >>> shift) | (x.l << (32 - shift));
         dst.h = (x.l >>> shift) | (x.h << (32 - shift));
     }
 
-//Bitwise-shifts right a 64-bit number by shift
-//Won't handle shift>=32, but it's never needed in SHA512
-    private static Int64shr(dst: any, x: any, shift: any) {
+    /**
+     * Bitwise-shifts right a 64-bit number by shift
+     * Won't handle shift>=32, but it's never needed in SHA512
+     */
+    private static int64shr(dst: any, x: any, shift: any) {
         dst.l = (x.l >>> shift) | (x.h << (32 - shift));
         dst.h = (x.h >>> shift);
     }
 
-//Adds two 64-bit numbers
-//Like the original implementation, does not rely on 32-bit operations
-    private static Int64add(dst: any, x: any, y: any) {
+    /**
+     * Adds two 64-bit numbers
+     * Like the original implementation, does not rely on 32-bit operations
+     */
+    private static int64add(dst: any, x: any, y: any) {
         const w0 = (x.l & 0xffff) + (y.l & 0xffff);
         const w1 = (x.l >>> 16) + (y.l >>> 16) + (w0 >>> 16);
         const w2 = (x.h & 0xffff) + (y.h & 0xffff) + (w1 >>> 16);
@@ -390,8 +404,10 @@ class Delegate {
         dst.h = (w2 & 0xffff) | (w3 << 16);
     }
 
-//Same, except with 4 addends. Works faster than adding them one by one.
-    private static Int64add4(dst: any, a: any, b: any, c: any, d: any) {
+    /**
+     * Adds two 64-bit numbers with 4 addends. Works faster than adding them one by one.
+     */
+    private static int64add4(dst: any, a: any, b: any, c: any, d: any) {
         const w0 = (a.l & 0xffff) + (b.l & 0xffff) + (c.l & 0xffff) + (d.l & 0xffff);
         const w1 = (a.l >>> 16) + (b.l >>> 16) + (c.l >>> 16) + (d.l >>> 16) + (w0 >>> 16);
         const w2 = (a.h & 0xffff) + (b.h & 0xffff) + (c.h & 0xffff) + (d.h & 0xffff) + (w1 >>> 16);
@@ -400,8 +416,10 @@ class Delegate {
         dst.h = (w2 & 0xffff) | (w3 << 16);
     }
 
-//Same, except with 5 addends
-    private static Int64add5(dst: any, a: any, b: any, c: any, d: any, e: any) {
+    /**
+     * Adds two 64-bit numbers with 5 addends. Works faster than adding them one by one.
+     */
+    private static int64add5(dst: any, a: any, b: any, c: any, d: any, e: any) {
         const w0 = (a.l & 0xffff) + (b.l & 0xffff) + (c.l & 0xffff) + (d.l & 0xffff) + (e.l & 0xffff);
         const w1 = (a.l >>> 16) + (b.l >>> 16) + (c.l >>> 16) + (d.l >>> 16) + (e.l >>> 16) + (w0 >>> 16);
         const w2 = (a.h & 0xffff) + (b.h & 0xffff) + (c.h & 0xffff) + (d.h & 0xffff) + (e.h & 0xffff) + (w1 >>> 16);
@@ -418,7 +436,7 @@ class Delegate {
         return extended;
     }
 
-// steps 1-12
+    // steps 1-12
     private _sha512crypt_intermediate(password: any, salt: any) {
         // const digest_a = this.rstr_sha512(password + salt);
         const digest_b = this.rstr_sha512(password + salt + password);
@@ -574,7 +592,7 @@ class Delegate {
 }
 
 /**
- * SHA-512 crypt compatible module
+ * SHA-512, supporting hex, base64, crypt and HMAC hashes
  * @preferred
  */
 export module sha512 {
