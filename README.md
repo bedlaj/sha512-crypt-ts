@@ -26,4 +26,4 @@ sha512.crypt('password', 'saltsalt');
 Another examples can be found in [unit tests](https://github.com/bedlaj/sha512-crypt-ts/blob/master/tests/sha512.test.ts) or in peer project [bedlaj/unifi-reset-password](https://github.com/bedlaj/unifi-reset-password/blob/master/src/app/app.component.ts).
 
 #### Documentation
-Generated docs can be found at https://bedlaj.github.io/sha512-crypt-ts/latest/modules/_index_.sha512.html (replace `latest` with version number to see older versions)
+Generated docs can be found at https://bedlaj.github.io/sha512-crypt-ts/modules/_index_.sha512.html
