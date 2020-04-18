@@ -20,7 +20,7 @@
     "crypt",
     "typescript"
   ],
-  "author": "Jan Bednar <public@janbednar.eu> (http://janbednar.eu)",
+  "author": "Jan Bednar <public@janbednar.eu> (https://janbednar.eu)",
   "repository": {
     "type": "git",
     "url": "https://github.com/bedlaj/sha512-crypt-ts.git"
