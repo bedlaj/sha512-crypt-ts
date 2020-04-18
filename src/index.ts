@@ -573,19 +573,82 @@ class Delegate {
     }
 }
 
+/**
+ * SHA-512 crypt compatible module
+ * @preferred
+ */
 export module sha512 {
+    /**
+     * Wrapper class based on https://github.com/mvo5/sha512crypt-node implementation.
+     * This is not intended to be accessible for end-user.
+     * @internal
+     */
     const delegate = new Delegate();
+
+    /**
+     * Compute SHA-512 hash compatible with crypt implementation (mkpasswd --method=sha-512)
+     * @param input - Input string to be hashed
+     * @param salt - Salt to be used with algorithm. Can contain magic prefix. Eg. param `$6$rounds=1000$saltvalue` Will use version 6 of sha-512 with rounds decreased from default 5000 to 1000 and salt = `saltvalue`
+     */
     export const crypt = (input: string, salt: string): string => delegate.sha512crypt(input, salt);
+
+    /**
+     * Compute SHA-512 hash with hexadecimal output
+     * @param input - Input string to be hashed
+     */
     export const hex = (input: string): string => delegate.rstr2hex(delegate.rstr_sha512(delegate.str2rstr_utf8(input)));
+
+    /**
+     * Compute SHA-512 hash with base64 output
+     * @param input - Input string to be hashed
+     */
     export const base64 = (input: string): string => delegate.rstr2b64(delegate.rstr_sha512(delegate.str2rstr_utf8(input)));
+
+    /**
+     * Compute SHA-512 hash with custom alphabet
+     * @param input - Input string to be hashed
+     * @param alphabet - Custom alphabet to build result hash
+     */
     export const any = (input: string, alphabet: string): string => delegate.rstr2any(delegate.rstr_sha512(delegate.str2rstr_utf8(input)), alphabet);
+
+    /**
+     * Compute SHA-512 hash as hexadecimal with HMAC digest
+     * @param key - HMAC key
+     * @param data - Input data to be hashed
+     */
     export const hexHmac = (key: string, data: string): string => delegate.rstr2hex(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)));
+
+    /**
+     * Compute SHA-512 hash as base64 with HMAC digest
+     * @param key - HMAC key
+     * @param data - Input data to be hashed
+     */
     export const base64Hmac = (key: string, data: string): string => delegate.rstr2b64(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)));
+
+    /**
+     * Compute SHA-512 hash with HMAC digest and custom alphabet
+     * @param key - HMAC key
+     * @param data - Input data to be hashed
+     * @param alphabet
+     */
     export const anyHmac = (key: string, data: string, alphabet: string): string => delegate.rstr2any(delegate.rstr_hmac_sha512(delegate.str2rstr_utf8(key), delegate.str2rstr_utf8(data)), alphabet);
 
+    /**
+     * Set padding character for base64 output. Set `=` to be strictly compliant with RFC-4648.
+     * Default padding is empty string.
+     * This is global per-module option.
+     * @param b64pad - Base64 padding character
+     */
     export function setBase64Padding(b64pad?: string): void {
         delegate.b64pad = b64pad || '';
     }
+
+    /**
+     * Set HexCase for hex based methods.
+     * Default is false.
+     * This is global per-module option.
+     * @param uppercase - true for uppercase output, false for lowercase output.
+     */
     export function setHexCase(uppercase?: boolean): void {
         delegate.hexcase = uppercase ? 1 : 0;
     }

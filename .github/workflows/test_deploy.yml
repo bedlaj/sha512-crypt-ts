@@ -36,9 +36,32 @@ jobs:
           ./node_modules/.bin/codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      - name: Publish
+      - name: Publish package
         uses: mikeal/merge-release@v4.0.7
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      - name: Build docs
+        run: |
+          npm run docs -- --gitRevision ${GITHUB_SHA}
+      - name: Find published version
+        run: |
+          echo "::set-env name=LATEST_VERSION::$(npm view sha512-crypt-ts version)"
+      - name: Publish docs version
+        uses: JamesIves/github-pages-deploy-action@releases/v2
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BASE_BRANCH: master
+          BRANCH: gh-pages
+          FOLDER: docs
+          TARGET_FOLDER: ${{ env.LATEST_VERSION }}
+      - name: Publish docs latest
+        uses: JamesIves/github-pages-deploy-action@releases/v2
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BASE_BRANCH: master
+          BRANCH: gh-pages
+          FOLDER: docs
+          TARGET_FOLDER: latest
+
 
