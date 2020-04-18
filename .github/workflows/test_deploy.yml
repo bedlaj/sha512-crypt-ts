@@ -48,7 +48,7 @@ jobs:
         run: |
           echo "::set-env name=LATEST_VERSION::$(npm view sha512-crypt-ts version)"
       - name: Publish docs version
-        uses: JamesIves/github-pages-deploy-action@releases/v2
+        uses: JamesIves/github-pages-deploy-action@releases/v3
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BASE_BRANCH: master
@@ -63,7 +63,7 @@ jobs:
         run: |
           npm run docs -- --gitRevision ${GITHUB_SHA}
       - name: Publish docs latest
-        uses: JamesIves/github-pages-deploy-action@releases/v2
+        uses: JamesIves/github-pages-deploy-action@releases/v3
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BASE_BRANCH: master
