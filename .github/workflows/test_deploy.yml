@@ -21,7 +21,7 @@ jobs:
         run: |
           npm install
           npm run test
-      - name: E2E test with mkpasswod
+      - name: E2E test with mkpasswd
         run: |
           sudo apt install -y whois
           npm install
