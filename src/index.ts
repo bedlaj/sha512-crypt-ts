@@ -586,7 +586,7 @@ export module sha512 {
     const delegate = new Delegate();
 
     /**
-     * Compute SHA-512 hash compatible with crypt implementation (mkpasswd --method=sha-512)
+     * Compute SHA-512 hash compatible with crypt implementation (`mkpasswd --method=sha-512`)
      * @param input - Input string to be hashed
      * @param salt - Salt to be used with algorithm. Can contain magic prefix. Eg. param `$6$rounds=1000$saltvalue` Will use version 6 of sha-512 with rounds decreased from default 5000 to 1000 and salt = `saltvalue`
      */
