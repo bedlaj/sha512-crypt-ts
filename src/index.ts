@@ -512,8 +512,7 @@ class Delegate {
         const magic_array = salt.split("$");
         if (magic_array.length > 1) {
             if (magic_array[1] !== "6") {
-                const s = "Got '" + salt + "' but only SHA512 ($6$) algorithm supported";
-                throw new Error(s);
+                throw new Error(`Got '${salt}' but only SHA512 ($6$) algorithm supported`);
             }
             rounds = parseInt(magic_array[2].split("=")[1]);
             if (rounds) {
@@ -528,7 +527,9 @@ class Delegate {
         }
 
         // salt is max 16 chars long
-        salt = salt.substr(0, 16);
+        if (salt.length < 8 || salt.length > 16) {
+            throw new Error(`Wrong salt length: ${salt.length} bytes when 8 <= n <= 16 expected. Got salt ${salt}.`);
+        }
 
         const input = this._rstr_sha512crypt(password, salt, rounds || 5000);
         let output = "";
@@ -606,7 +607,8 @@ export module sha512 {
     /**
      * Compute SHA-512 hash compatible with crypt implementation (`mkpasswd --method=sha-512`)
      * @param input - Input string to be hashed
-     * @param salt - Salt to be used with algorithm. Can contain magic prefix. Eg. param `$6$rounds=1000$saltvalue` Will use version 6 of sha-512 with rounds decreased from default 5000 to 1000 and salt = `saltvalue`
+     * @param salt - Salt to be used with algorithm. Salt length must be between 8 and 16 characters. Can contain magic prefix. Eg. param `$6$rounds=1000$saltvalue` Will use rounds decreased from default 5000 to 1000 and salt = `saltvalue`
+     * @throws Error if input values validation fails
      */
     export const crypt = (input: string, salt: string): string => delegate.sha512crypt(input, salt);
 

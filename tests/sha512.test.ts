@@ -1,5 +1,5 @@
 import {sha512} from '../src';
-import {expect, assert} from 'chai';
+import {assert, expect} from 'chai';
 
 beforeEach(function () {
     sha512.setBase64Padding();
@@ -33,6 +33,13 @@ describe('crypt', function () {
     it('crypt should validate magic', function () {
         assert.throws(() => sha512.crypt("password", "$5$saltsalt"), Error)
         assert.doesNotThrow(() => sha512.crypt("password", "$6$saltsalt"), Error)
+    });
+
+    it('crypt should validate salt length', function () {
+        assert.throws(() => sha512.crypt("password", "1234567"), Error)
+        assert.doesNotThrow(() => sha512.crypt("password", "12345678"), Error)
+        assert.throws(() => sha512.crypt("password", "12345678901234567"), Error)
+        assert.doesNotThrow(() => sha512.crypt("password", "123456780123456"), Error)
     });
 });
 
