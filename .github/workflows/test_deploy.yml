@@ -50,6 +50,7 @@ jobs:
       #        run: |
       #          echo "::set-env name=LATEST_VERSION::$(npm view sha512-crypt-ts version)"
       - name: Copy docs includes
+        if: "!contains(github.event.head_commit.message, 'skip-docs')"
         run: |
           cp -R ./docs_include/* ./docs
       - name: Publish docs
