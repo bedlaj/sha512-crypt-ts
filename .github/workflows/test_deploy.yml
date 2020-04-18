@@ -44,9 +44,12 @@ jobs:
       - name: Build docs
         run: |
           npm run docs -- --gitRevision ${GITHUB_SHA}
-#      - name: Find published version
-#        run: |
-#          echo "::set-env name=LATEST_VERSION::$(npm view sha512-crypt-ts version)"
+      #      - name: Find published version
+      #        run: |
+      #          echo "::set-env name=LATEST_VERSION::$(npm view sha512-crypt-ts version)"
+      - name: Copy docs includes
+        run: |
+          cp -R ./docs_include/* ./docs
       - name: Publish docs
         uses: JamesIves/github-pages-deploy-action@releases/v2
         env:
