@@ -20,7 +20,12 @@ jobs:
       - name: Test
         run: |
           npm install
-          npm test
+          npm run test
+      - name: E2E test with mkpasswod
+        run: |
+          sudo apt install -y whois
+          npm install
+          npm run e2e
       - name: Build
         run: |
           npm install

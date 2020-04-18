@@ -13,8 +13,8 @@ describe('crypt', function () {
     });
     it('should extend with long password', function () {
         this.enableTimeouts(false);
-        let result = sha512.crypt(new Array(64*3).join('a'), "saltsalt")
-        expect(result).equal("$6$saltsalt$1waR97hj.De.si2aUKm7TSJMAKH8gA5wUQZqfW5XVNs6WkyBI03XjoIhm/3igFPeKIKlcRkUhA6CxtheIBE0a.");
+        let result = sha512.crypt(new Array(64).join('a'), "saltsalt")
+        expect(result).equal("$6$saltsalt$H8TWMaGNaWIlbCN.ve/rdRsHfqIqWBb7.bA3AXhg.LxuC9tFTrOvR1WclafJTyj/sTvPMjtI7XRtWpuVYDqys.");
     });
     it('should support $6$ salt format', function () {
         let result = sha512.crypt("password", "$6$saltsalt")

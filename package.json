@@ -4,6 +4,7 @@
   "description": "Typescript wrapper for SHA-512, including $6$ crypt format.",
   "scripts": {
     "test": "mocha -r ts-node/register tests/*.test.ts",
+    "e2e": "mocha -r ts-node/register tests/*.e2e.ts",
     "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test",
     "build": "tsc"
   },
@@ -38,6 +39,7 @@
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
+    "@types/node": "^13.13.0",
     "chai": "^4.2.0",
     "codecov": "^3.6.5",
     "mocha": "^7.1.1",
