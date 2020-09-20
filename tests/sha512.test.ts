@@ -12,7 +12,6 @@ describe('crypt', function () {
         expect(result).equal("$6$saltsalt$qFmFH.bQmmtXzyBY0s9v7Oicd2z4XSIecDzlB5KiA2/jctKu9YterLp8wwnSq.qc.eoxqOmSuNp2xS0ktL3nh/");
     });
     it('should extend with long password', function () {
-        this.enableTimeouts(false);
         let result = sha512.crypt(new Array(64).join('a'), "saltsalt")
         expect(result).equal("$6$saltsalt$H8TWMaGNaWIlbCN.ve/rdRsHfqIqWBb7.bA3AXhg.LxuC9tFTrOvR1WclafJTyj/sTvPMjtI7XRtWpuVYDqys.");
     });
