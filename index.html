@@ -1,0 +1,133 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>sha512-crypt-ts</title>
+	<meta name="description" content="Documentation for sha512-crypt-ts">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">sha512-crypt-ts</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>sha512-crypt-ts</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<p><a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome"></a>
+					<img src="https://github.com/bedlaj/sha512-crypt-ts/workflows/Build/badge.svg" alt="Build">
+					<img src="https://github.com/bedlaj/sha512-crypt-ts/workflows/Test%20and%20publish/badge.svg" alt="Test and publish">
+					<a href="https://codecov.io/gh/bedlaj/sha512-crypt-ts"><img src="https://codecov.io/gh/bedlaj/sha512-crypt-ts/branch/master/graph/badge.svg" alt="codecov"></a>
+					<a href="https://lgtm.com/projects/g/bedlaj/sha512-crypt-ts/alerts/"><img src="https://img.shields.io/lgtm/alerts/g/bedlaj/sha512-crypt-ts.svg?logo=lgtm&logoWidth=18" alt="Total alerts"></a>
+				<a href="https://lgtm.com/projects/g/bedlaj/sha512-crypt-ts/context:javascript"><img src="https://img.shields.io/lgtm/grade/javascript/g/bedlaj/sha512-crypt-ts.svg?logo=lgtm&logoWidth=18" alt="Language grade: JavaScript"></a></p>
+				<a href="#sha-512-crypt-ts" id="sha-512-crypt-ts" style="color: inherit; text-decoration: none;">
+					<h1>SHA-512-crypt-ts</h1>
+				</a>
+				<p>Crypt compatible typescript implementation inspired by <a href="https://github.com/mvo5/sha512crypt-node">mvo5/sha512crypt-node</a></p>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h1>Installation</h1>
+				</a>
+				<a href="#install-npm-package" id="install-npm-package" style="color: inherit; text-decoration: none;">
+					<h4>Install <a href="https://www.npmjs.com/package/sha512-crypt-ts">NPM package</a></h4>
+				</a>
+				<pre><code>npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save sha512-crypt-ts</span></code></pre>
+				<a href="#import-module" id="import-module" style="color: inherit; text-decoration: none;">
+					<h4>Import module</h4>
+				</a>
+				<pre><code><span class="hljs-keyword">import</span> { sha512 } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;sha512-crypt-ts&#x27;</span>;</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h4>Usage</h4>
+				</a>
+				<pre><code>sha512.crypt(<span class="hljs-string">&#x27;password&#x27;</span>, <span class="hljs-string">&#x27;saltsalt&#x27;</span>);
+<span class="hljs-regexp">//</span> This is equivalent to: printf <span class="hljs-string">&quot;password&quot;</span> | mkpasswd --stdin --method=sha-<span class="hljs-number">512</span> --salt=saltsalt
+<span class="hljs-regexp">//</span> Returns <span class="hljs-variable">$6</span><span class="hljs-variable">$saltsalt</span><span class="hljs-variable">$qFmFH</span>.bQmmtXzyBY0s9v7Oicd2z4XSIecDzlB5KiA2<span class="hljs-regexp">/jctKu9YterLp8wwnSq.qc.eoxqOmSuNp2xS0ktL3nh/</span></code></pre>
+				<p>Another examples can be found in <a href="https://github.com/bedlaj/sha512-crypt-ts/blob/master/tests/sha512.test.ts">unit tests</a> or in peer project <a href="https://github.com/bedlaj/unifi-reset-password/blob/master/src/app/app.component.ts">bedlaj/unifi-reset-password</a>.</p>
+				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+					<h4>Documentation</h4>
+				</a>
+				<p>Generated docs can be found at <a href="https://bedlaj.github.io/sha512-crypt-ts/modules/_index_.sha512.html">https://bedlaj.github.io/sha512-crypt-ts/modules/_index_.sha512.html</a></p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_index_.html">&quot;index&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
