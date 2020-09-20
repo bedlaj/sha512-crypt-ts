@@ -12,7 +12,7 @@ describe('crypt e2e - requires bash and mkpasswd installed', function () {
         });
     });
     it('crypt bulk', function () {
-        this.enableTimeouts(false);
+        this.timeout(30000);
         for (let i = 0; i<=100; i++){
             let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             let passwdLength = Math.floor(1 + Math.random()*63);
@@ -35,7 +35,7 @@ describe('crypt e2e - requires bash and mkpasswd installed', function () {
         }
     });
     it('should extend with long password', function () {
-        this.enableTimeouts(false);
+        this.timeout(30000);
         const input = new Array(64).join('a');
         let result = sha512.crypt(input, "saltsalt")
         exec(`printf "${input}" | mkpasswd --stdin --method=sha-512 --salt=saltsalt`, (error, stdout) => {
